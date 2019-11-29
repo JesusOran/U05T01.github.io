@@ -40,6 +40,7 @@ function cargarFecha() {
   var aaaa = today.getFullYear();
   today = `${aaaa}-${mm}-${dd}`;
   fechaActual.setAttribute("value", today);
+  fechaActual.setAttribute("min", today);
 }
 
 function diasEspecificos() {
