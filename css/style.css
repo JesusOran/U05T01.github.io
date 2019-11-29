@@ -1,0 +1,27 @@
+.container {
+  border: 1px solid;
+  margin-top: 50px;
+  padding: 20px;
+}
+
+#contenedorHabitacion {
+  display: flex;
+  flex-flow: row wrap;
+}
+#habitacionHuesped {
+  flex-basis: 90%;
+  margin-right: auto;
+}
+
+.contenido {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.contenido > label {
+  flex-basis: 100%;
+}
+
+.contenido > button {
+  margin-left: 10px;
+}
