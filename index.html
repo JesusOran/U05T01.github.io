@@ -20,20 +20,48 @@
   </head>
   <body>
     <div class="container">
+      <div id="showTest">
+        <button v-show="boton" v-on:click="boton = !boton" @click="darkTheme()">
+          Dark Theme
+        </button>
+        <button
+          v-show="!boton"
+          v-on:click="boton = !boton"
+          @click="lightTheme()"
+        >
+          Light Theme
+        </button>
+      </div>
       <h1>U05T01 - Preparando reserva hotelera</h1>
       <form>
         <fieldset id="contenidos">
-          <div class="form-group">
-            <label for="hotel">Descripción o nombre del hotel</label>
-            <input type="text" class="form-control" id="hotel" />
+          <div id="name" class="form-group">
+            <label for="hotel"
+              >Descripción o nombre del hotel: {{ hotelName }}</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="hotel"
+              maxlength="100"
+              v-model="hotelName"
+            />
           </div>
-          <div class="form-group">
+          <div id="entrada" class="form-group">
             <label for="fechaEntrada">Fecha de entrada</label>
-            <input type="date" class="form-control" id="fechaEntrada" />
+            <input
+              type="date"
+              class="form-control"
+              id="fechaEntrada"
+              v-model="fecha"
+            />
           </div>
-          <div class="form-group">
-            <label for="numNoches">Número de noches</label>
-            <select id="numNoches" class="form-control">
+          <div id="noches" class="form-group">
+            <label for="numNoches">Número de noches: {{ selected }}</label>
+            <span v-if="selected === sale25">(25% de descuento)</span>
+            <span v-else-if="selected === sale50">(50% de descuento)</span>
+            <span v-else><!--(10% de descuento)--></span>
+            <select v-model="selected" id="numNoches" class="form-control">
               <option disabled>Duraciones populares</option>
               <option>4 noches</option>
               <option>7 noches</option>
@@ -57,11 +85,12 @@
           </div>
         </fieldset>
         <br />
-        <button type="button" class="btn btn-lg btn-primary" id="buscar">
-          Buscar
-        </button>
+        <div id="component-search">
+          <button-search></button-search>
+        </div>
       </form>
     </div>
+    <script src="node_modules/vue/dist/vue.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>

@@ -1,3 +1,81 @@
+var vm = new Vue({
+  el: "#name",
+  data: {
+    hotelName: ""
+  }
+});
+
+var vmSelected = new Vue({
+  el: "#noches",
+  data: {
+    selected: "",
+    sale50: "14 noches",
+    sale25: "7 noches"
+  }
+});
+
+var now = new Date();
+var day = ("0" + now.getDate()).slice(-2);
+var month = ("0" + (now.getMonth() + 1)).slice(-2);
+var today = now.getFullYear() + "-" + month + "-" + day;
+document.getElementById("fechaEntrada").setAttribute("min", today);
+var vmDate = new Vue({
+  el: "#entrada",
+  data: {
+    fecha: today
+  }
+});
+
+function getReserva() {
+  var hotel = document.getElementById("hotel").value;
+  var fecha = document.getElementById("fechaEntrada").value;
+  var numNoches = document.getElementById("numNoches").value;
+  var habitacionHuesped = document.getElementById("habitacionHuesped").value;
+  var reserva = [hotel, fecha, numNoches, habitacionHuesped];
+
+  return reserva;
+}
+
+Vue.component("button-search", {
+  template:
+    '<button v-on:click="updateMessage" type="button" class="btn btn-lg btn-primary">Buscar</button>',
+  methods: {
+    updateMessage: function() {
+      alert(getReserva());
+    }
+  }
+});
+
+Vue.component("button-search-results", {
+  data: function() {
+    return {
+      items: reserva
+    };
+  },
+  template: "<div>{{ items }}</div>"
+});
+
+var vmSearch = new Vue({
+  el: "#component-search"
+});
+
+var vmShow = new Vue({
+  el: "#showTest",
+  data: {
+    boton: true
+  },
+  methods: {
+    darkTheme: function() {
+      document.body.style.backgroundColor = "black";
+      document.body.style.color = "white";
+    },
+    lightTheme: function() {
+      document.body.style.backgroundColor = "initial";
+      document.body.style.color = "black";
+    }
+  }
+});
+
 const ultimoDiaPopular = 14;
 const minHabitiaciones = 1;
 const defaultAdultos = 2;
@@ -25,23 +103,10 @@ var add = (function() {
   };
 })();
 
-cargarFecha();
 diasEspecificos();
 
 var nuevoFormulario = document.getElementById("seleccionar");
 nuevoFormulario.addEventListener("click", huespedHabitacion);
-document.getElementById("buscar").addEventListener("click", mostrarDatos);
-
-function cargarFecha() {
-  var fechaActual = document.getElementById("fechaEntrada");
-  var today = new Date();
-  var dd = String(today.getDate());
-  var mm = String(today.getMonth() + 1); //Enero es 0
-  var aaaa = today.getFullYear();
-  today = `${aaaa}-${mm}-${dd}`;
-  fechaActual.setAttribute("value", today);
-  fechaActual.setAttribute("min", today);
-}
 
 function diasEspecificos() {
   var opcionDia = document.getElementById("numNoches");
@@ -215,16 +280,4 @@ function edadMenor(event) {
     edadNinio.setAttribute("class", "m-2 campoEdad");
     padre.insertBefore(edadNinio, referencia);
   }
-}
-
-function mostrarDatos() {
-  var hotel = document.getElementById("hotel").value;
-  var fecha = document.getElementById("fechaEntrada").value;
-  var numNoches = document.getElementById("numNoches").value;
-  var habitacionHuesped = document.getElementById("habitacionHuesped").value;
-
-  console.log("Descripción o nombre del hotel: " + hotel);
-  console.log("Fecha de entrada: " + fecha);
-  console.log("Número de noches: " + numNoches);
-  console.log("Habitaciones y huéspedes: " + habitacionHuesped);
 }
